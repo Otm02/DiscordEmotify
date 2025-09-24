@@ -1,10 +1,10 @@
 # Troubleshooting
 
 Welcome to the Frequently Asked Questions (FAQ) and Troubleshooting page!
-Here you'll find the answers to most of the questions related to **DiscordChatExporter** (DCE for short) and its core features.
+Here you'll find the answers to most of the questions related to **DiscordEmotify** and its core features.
 
-- ❓ If you still have unanswered questions _after_ reading this page, feel free to [create a new discussion](https://github.com/Tyrrrz/DiscordChatExporter/discussions/new).
-- 🐞 If you have encountered a problem that's not described here, has not [been discussed before](https://github.com/Tyrrrz/DiscordChatExporter/discussions), and is not a [known issue](https://github.com/Tyrrrz/DiscordChatExporter/issues?q=is%3Aissue), please [create a new discussion](https://github.com/Tyrrrz/DiscordChatExporter/discussions/new) or [open a bug report](https://github.com/Tyrrrz/DiscordChatExporter/issues/new). Don't forget to include your platform (Windows, Mac, Linux, etc.) and a detailed description of your question/problem.
+- ❓ If you still have unanswered questions _after_ reading this page, feel free to open an issue on the [DiscordEmotify repo](https://github.com/Otm02/DiscordEmotify/issues/new).
+- 🐞 If you've encountered a problem that's not described here, include your platform (Windows, Mac, Linux, etc.), CLI/GUI version, and a detailed description of your question/problem.
 
 ## General questions
 
@@ -26,41 +26,13 @@ Follow the [instructions here](Token-and-IDs.md).
 
 Automating user accounts is technically against [TOS](https://discord.com/terms), use at your discretion. [Bot accounts](https://discord.com/developers/docs/topics/oauth2#bot-users) don't have this restriction.
 
-### Will the messages disappear from the exported file if I delete a message, delete my account or block a person?
+### Can DiscordEmotify react to deleted messages?
 
-Text messages will not be removed from the exported file, but if media, such as images and user avatars, is changed or deleted, it will no longer be displayed. To avoid this, export using the "Download media" (`--media`) option.
+No. Deleted messages cannot be reacted to.
 
-### Can DCE export messages that have already been deleted?
+### Can DiscordEmotify react in private chats (DMs)?
 
-No, DCE cannot access them since they have been permanently deleted from Discord's servers.
-
-### Can DCE export private chats?
-
-Yes, if your account has access to them.
-
-### Can DCE download images?
-
-Yes, and other media too. Export using the "Download media" (`--media`) option.
-
-### Can the exported chats be shared?
-
-Yes.
-
-### Can DCE export multiple formats at once?
-
-No, you can only export one format at a time.
-
-### Can DCE recreate the exported chats in Discord?
-
-No, DCE is an exporter.
-
-### Can DCE reupload exported messages to another channel?
-
-No, DCE is an exporter.
-
-### Can DCE add new messages to an existing export?
-
-No.
+Yes, if your account has access to them. Use `reactdm` in the CLI or select DM channels in the GUI.
 
 ## First steps
 
@@ -68,25 +40,24 @@ No.
 
 Check the following page: [Obtaining token](Token-and-IDs.md)
 
-### When I open DCE a black window pops up quickly or nothing shows up
+### When I open DiscordEmotify a black window pops up quickly or nothing shows up
 
 You might have downloaded the CLI flavor of the app, which is meant to be run in a terminal. Try [downloading the GUI](Getting-started.md#gui-or-cli) instead if that's what you want.
 
-### How can I set DCE to export automatically at certain times?
+### Can I schedule bulk reactions?
 
-Check the following pages to learn how to schedule **DiscordChatExporter.CLI** runs (advanced):
+You can schedule CLI runs with your OS tools (Task Scheduler, cron, launchd). Be mindful of Discord ToS when automating user accounts.
 
-- [Windows scheduling](Scheduling-Windows.md)
-- [macOS scheduling](Scheduling-MacOS.md)
-- [Linux scheduling](Scheduling-Linux.md)
+### Reactions fail with Unknown Emoji
 
-### The exported file is too large, I can't open it
+Make sure your emoji is valid:
 
-Try opening it with a different program, try partitioning or use a different file format, like `PlainText`.
+- Unicode: paste the emoji directly or use shortcodes like `:smile:`
+- Custom: `name:emoji_id` (optionally `name:emoji_id:yes` for animated)
 
-### I see messages in the export, but they have no content
+### Reactions fail due to missing permissions
 
-Your bot is missing the 'Message Content Intent'. Go to the [Discord Developer Portal](https://discord.com/developers/applications), navigate to the 'Bot' section and enable it.
+Your account must have permission to add reactions in the target channels.
 
 ## CLI
 
@@ -104,32 +75,30 @@ Check the following page:
 
 - [Obtaining Channel IDs](Token-and-IDs.md)
 
-### I can't find Docker exported chats
+### Docker usage
 
-Check the following page:
+See: [Docker usage instructions](Docker.md)
 
-- [Docker usage instructions](Docker.md)
-
-### I can't export Direct Messages
+### I can't react in Direct Messages
 
 Make sure you're [copying the DM Channel ID](Token-and-IDs.md#how-to-get-a-direct-message-channel-id), not the person's user ID.
 
 ## Errors
 
 ```yml
-DiscordChatExporter.Domain.Exceptions.DiscordChatExporterException: Authentication token is invalid.
+Authentication token is invalid.
 ```
 
 ↳ Make sure the provided token is correct.
 
 ```yml
-DiscordChatExporter.Domain.Exceptions.DiscordChatExporterException: Requested resource does not exist.
+Requested resource does not exist.
 ```
 
 ↳ Check your channel ID, it might be invalid. [Read this if you need help](Token-and-IDs.md).
 
 ```yml
-DiscordChatExporter.Domain.Exceptions.DiscordChatExporterException: Access is forbidden.
+Access is forbidden.
 ```
 
 ↳ This means you don't have access to the channel.
@@ -148,12 +117,12 @@ If it still doesn't work, try mozroots: `mozroots --import --ask-remove`
 
 ## macOS-specific
 
-### DiscordChatExporter is damaged and can’t be opened. You should move it to the Trash.
+### DiscordEmotify is damaged and can’t be opened. You should move it to the Trash.
 
 Check the [Using the GUI page](Using-the-GUI.md#step-1) for instructions on how to run the app.
 
 ---
 
-> ❓ If you still have unanswered questions, feel free to [create a new discussion](https://github.com/Tyrrrz/DiscordChatExporter/discussions/new).
+> ❓ If you still have unanswered questions, feel free to open an issue on the DiscordEmotify repo.
 >
-> 🐞 If you have encountered a problem that's not described here, has not [been discussed before](https://github.com/Tyrrrz/DiscordChatExporter/discussions), and is not a [known issue](https://github.com/Tyrrrz/DiscordChatExporter/issues?q=is%3Aissue), please [create a new discussion](https://github.com/Tyrrrz/DiscordChatExporter/discussions/new) or [open a bug report](https://github.com/Tyrrrz/DiscordChatExporter/issues/new).
+> 🐞 If you've encountered a problem that's not described here, please open a bug report with details.

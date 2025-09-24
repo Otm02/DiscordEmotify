@@ -3,7 +3,7 @@
 > [!WARNING]
 > **Do not share your token!** A token gives full access to an account.  
 > To reset a user token, change your account password.  
-> To reset a bot token, click on [Reset Token](#how-to-export-with-a-bot-token) in the bot settings.
+> To reset a bot token, click on Reset Token in the bot settings of your application.
 
 ## How to get a user token
 
@@ -255,7 +255,7 @@ Prerequisite step: Navigate to [discord.com](https://discord.com) and login.
 4. Press <kbd>Esc</kbd>. The settings page will close.
 5. To find your user token, continue [here](#in-chrome).
 
-## How to export with a bot token
+## How to use a bot token
 
 ### Step 1 - Create an application
 
@@ -267,7 +267,7 @@ You can create a new application or use an existing one. If you want to create a
 
 ### Step 2 - Invite the bot to your server
 
-The bot needs to be invited to the server you'd like to export from.
+The bot needs to be invited to the server you want to react in.
 
 1. Go to [Discord developer portal](https://discord.com/developers/applications)
 2. Navigate to **General Information** on the left
@@ -283,7 +283,7 @@ https://discord.com/oauth2/authorize?scope=bot&permissions=66560&client_id=YOUR_
 
 ### Step 3 - Ensure message content intent is enabled
 
-If this option is not enabled, the exported files will be empty.
+If this option is not enabled, your bot may not see message content and may fail to filter messages or resolve emoji/mentions when reacting.
 
 1. Go to [Discord developer portal](https://discord.com/developers/applications)
 2. Open your Application's settings

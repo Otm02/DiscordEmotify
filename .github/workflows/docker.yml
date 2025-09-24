@@ -31,16 +31,16 @@ jobs:
       - name: Build image
         run: >
           docker buildx build .
-          --file DiscordChatExporter.Cli.dockerfile
+          --file DiscordEmotify.Cli.dockerfile
           --platform linux/amd64,linux/arm64
           --build-arg VERSION=${{ github.ref_type == 'tag' && github.ref_name || format('999.9.9-ci-{0}', github.sha) }}
-          --output type=tar,dest=DiscordChatExporter.Cli.Docker.tar
+          --output type=tar,dest=DiscordEmotify.Cli.Docker.tar
 
       - name: Upload image
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: DiscordChatExporter.Cli.Docker
-          path: DiscordChatExporter.Cli.Docker.tar
+          name: DiscordEmotify.Cli.Docker
+          path: DiscordEmotify.Cli.Docker.tar
           if-no-files-found: error
 
   deploy:
@@ -63,15 +63,15 @@ jobs:
       - name: Login to DockerHub
         run: >
           echo ${{ secrets.DOCKER_TOKEN }} |
-          docker login --username tyrrrz --password-stdin
+          docker login --username otm02 --password-stdin
 
       - name: Build & push image
         run: >
           docker buildx build .
-          --file DiscordChatExporter.Cli.dockerfile
+          --file DiscordEmotify.Cli.dockerfile
           --platform linux/amd64,linux/arm64
           --build-arg VERSION=${{ github.ref_type == 'tag' && github.ref_name || format('999.9.9-ci-{0}', github.sha) }}
           --push
-          --tag tyrrrz/discordchatexporter:latest
-          ${{ github.ref_type == 'tag' && '--tag tyrrrz/discordchatexporter:$GITHUB_REF_NAME' || '' }}
-          ${{ github.ref_type == 'tag' && '--tag tyrrrz/discordchatexporter:stable' || '' }}
+          --tag otm02/discordemotify:latest
+          ${{ github.ref_type == 'tag' && '--tag otm02/discordemotify:$GITHUB_REF_NAME' || '' }}
+          ${{ github.ref_type == 'tag' && '--tag otm02/discordemotify:stable' || '' }}

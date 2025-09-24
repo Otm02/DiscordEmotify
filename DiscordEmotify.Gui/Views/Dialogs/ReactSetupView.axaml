@@ -1,0 +1,57 @@
+<UserControl
+    x:Class="DiscordEmotify.Gui.Views.Dialogs.ReactSetupView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dialogs="clr-namespace:DiscordEmotify.Gui.ViewModels.Dialogs"
+    xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    Width="380"
+    x:DataType="dialogs:ReactSetupViewModel">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Margin="16" FontSize="19" FontWeight="Light">
+            <Run Text="React to " />
+            <Run FontWeight="SemiBold" Text="{Binding Channels.Count}" />
+            <Run Text=" channel(s)" />
+        </TextBlock>
+
+        <Border Grid.Row="1" Padding="0,8" BorderBrush="{DynamicResource MaterialDividerBrush}" BorderThickness="0,1">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical">
+                    <!-- Emoji input -->
+                    <TextBox Margin="16,8" Text="{Binding EmojiInput}" Watermark="Emoji (🙂, :smile:, or name:id)" />
+
+                    <!-- Delay -->
+                    <DockPanel Margin="16,8" LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left" Text="Delay (ms)" />
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                            <TextBlock Margin="10,0" Text="{Binding DelayMs}" />
+                            <Slider Width="150" Minimum="0" Maximum="10000" TickFrequency="50" IsSnapToTickEnabled="True" Value="{Binding DelayMs}" />
+                        </StackPanel>
+                    </DockPanel>
+
+                    <!-- Order -->
+                    <DockPanel Margin="16,8" LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left" Text="Order" />
+                        <ComboBox DockPanel.Dock="Right" Width="150" SelectedItem="{Binding Order}">
+                            <ComboBoxItem Content="Asc" />
+                            <ComboBoxItem Content="Desc" />
+                        </ComboBox>
+                    </DockPanel>
+
+                    <!-- Clear (unreact) -->
+                    <CheckBox Margin="16,8" IsChecked="{Binding Clear}">
+                        <TextBlock>
+                            <Run Text="Clear (unreact) instead of adding" />
+                        </TextBlock>
+                    </CheckBox>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Buttons -->
+        <Grid Grid.Row="2" Margin="16" ColumnDefinitions="*,Auto,Auto">
+            <Button Grid.Column="1" Content="CONFIRM" IsDefault="True" Command="{Binding ConfirmCommand}" />
+            <Button Grid.Column="2" Margin="16,0,0,0" Content="CANCEL" IsCancel="True" Command="{Binding CloseCommand}" />
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,12 +1,11 @@
-# DiscordChatExporter
+# DiscordEmotify
 
 [![Status](https://img.shields.io/badge/status-maintenance-ffd700.svg)](https://github.com/Tyrrrz/.github/blob/master/docs/project-status.md)
 [![Made in Ukraine](https://img.shields.io/badge/made_in-ukraine-ffd700.svg?labelColor=0057b7)](https://tyrrrz.me/ukraine)
-[![Build](https://img.shields.io/github/actions/workflow/status/Tyrrrz/DiscordChatExporter/main.yml?branch=master)](https://github.com/Tyrrrz/DiscordChatExporter/actions)
-[![Coverage](https://img.shields.io/codecov/c/github/Tyrrrz/DiscordChatExporter/master)](https://codecov.io/gh/Tyrrrz/DiscordChatExporter)
-[![Release](https://img.shields.io/github/release/Tyrrrz/DiscordChatExporter.svg)](https://github.com/Tyrrrz/DiscordChatExporter/releases)
-[![Downloads](https://img.shields.io/github/downloads/Tyrrrz/DiscordChatExporter/total.svg)](https://github.com/Tyrrrz/DiscordChatExporter/releases)
-[![Pulls](https://img.shields.io/docker/pulls/tyrrrz/discordchatexporter)](https://hub.docker.com/r/tyrrrz/discordchatexporter)
+<!-- Badges updated for DiscordEmotify (adjust as your CI/registry is configured) -->
+[![Build](https://img.shields.io/github/actions/workflow/status/Otm02/DiscordEmotify/main.yml?branch=master)](https://github.com/Otm02/DiscordEmotify/actions)
+[![Release](https://img.shields.io/github/release/Otm02/DiscordEmotify.svg)](https://github.com/Otm02/DiscordEmotify/releases)
+[![Downloads](https://img.shields.io/github/downloads/Otm02/DiscordEmotify/total.svg)](https://github.com/Otm02/DiscordEmotify/releases)
 [![Discord](https://img.shields.io/discord/869237470565392384?label=discord)](https://discord.gg/2SUWKFnHSm)
 [![Fuck Russia](https://img.shields.io/badge/fuck-russia-e4181c.svg?labelColor=000000)](https://twitter.com/tyrrrz/status/1495972128977571848)
 
@@ -20,8 +19,7 @@
     <img src="favicon.png" alt="Icon" />
 </p>
 
-**DiscordChatExporter** is an application that can be used to export message history from any [Discord](https://discord.com) channel to a file.
-It works with direct messages, group messages, and server channels, and supports Discord's dialect of markdown as well as most other rich media features.
+**DiscordEmotify** is a CLI/GUI tool that reacts to every message in a selected Discord channel (including DMs) with an emoji you provide. It uses a robust Discord API client and rate-limit handling to perform bulk reactions safely.
 
 > ❔ If you have questions or issues, **please refer to the [docs](.docs)**.
 
@@ -40,19 +38,23 @@ To learn more about the war and how you can help, [click here](https://tyrrrz.me
 
 ## Download
 
-- **Graphical user interface** (desktop app):
-  - 🟢 **[Stable release](https://github.com/Tyrrrz/DiscordChatExporter/releases/latest)**: look for `DiscordChatExporter.*.zip`
-  - 🟠 [CI build](https://github.com/Tyrrrz/DiscordChatExporter/actions/workflows/main.yml): look for `DiscordChatExporter.*.zip`
-- **Command-line interface** (terminal app):
-  - 🟢 **[Stable release](https://github.com/Tyrrrz/DiscordChatExporter/releases/latest)**: look for `DiscordChatExporter.Cli.*.zip`
-  - 🟠 [CI build](https://github.com/Tyrrrz/DiscordChatExporter/actions/workflows/main.yml): look for `DiscordChatExporter.Cli.*.zip`
-  - 🐋 [Docker](https://hub.docker.com/r/tyrrrz/discordchatexporter): `docker pull tyrrrz/discordchatexporter`
-  - 📦 [AUR](https://aur.archlinux.org/packages/discord-chat-exporter-cli): `discord-chat-exporter-cli`
-  - 📦 [Nix](https://search.nixos.org/packages?query=discordchatexporter-cli): `discordchatexporter-cli`
+- This repository contains a CLI/GUI application; build locally using the .NET SDK:
+
+  1) Install .NET 9 SDK: https://dotnet.microsoft.com/download
+
+  2) Build:
+
+     - Windows PowerShell:
+
+       ```powershell
+       dotnet build .\DiscordEmotify.sln -c Release
+       ```
+
+  3) Run from the CLI project output folder or with `dotnet run`.
 
 > **Important**:
 > To launch the GUI version of the app on MacOS, you need to first remove the downloaded file from quarantine.
-> You can do that by running the following command in the terminal: `xattr -rd com.apple.quarantine DiscordChatExporter.app`.
+> You can do that by running the following command in the terminal: `xattr -rd com.apple.quarantine DiscordEmotify.app`.
 
 > **Note**:
 > If you're unsure which build is right for your system, consult with [this page](https://useragent.cc) to determine your OS and CPU architecture.
@@ -63,19 +65,47 @@ To learn more about the war and how you can help, [click here](https://tyrrrz.me
 
 ## Features
 
-- Cross-platform graphical and command-line interfaces
-- Authentication via either a user or a bot token
-- Multiple output formats: HTML (dark/light), TXT, CSV, JSON
-- Support for markdown, attachments, embeds, emoji, and other rich media features
-- File partitioning, date ranges, message filtering, and other export options
-- Self-contained exports that can be viewed offline
+- Add reactions to every message in a channel or across all DMs
+- Supports user or bot tokens (token type is auto-detected)
+- Respects Discord rate limits (configurable advisory vs hard limits)
+- Date range boundaries (`--after`, `--before`) and message filtering (`--filter`)
+- Parallel processing across channels with `--parallel`
 
-## Screenshots
+Note: Your account/bot must have permission to add reactions in the target channels.
 
-![channel list](.assets/list.png)
-![rendered output](.assets/output.png)
+Automating user accounts may be against Discord ToS — use at your own risk.
+
+## Usage
+
+- React to specific channel(s) (can pass category IDs to include all its channels):
+
+  ```powershell
+  # Standard emoji by Unicode
+  DiscordEmotify.Cli.exe react --token "<TOKEN>" --channel 123456789012345678 --emoji 🙂
+
+  # Standard emoji by code
+  DiscordEmotify.Cli.exe react --token "<TOKEN>" --channel 123 --emoji :smile:
+
+  # Custom emoji: name:id
+  DiscordEmotify.Cli.exe react --token "<TOKEN>" --channel 123 --emoji party_parrot:987654321098765432
+
+  # Only messages after/before specific IDs or dates, with a filter
+  DiscordEmotify.Cli.exe react -t "<TOKEN>" -c 123 --emoji 🙂 --after 2024-01-01 --filter "from:me AND has:embed"
+  ```
+
+- React across all direct message channels:
+
+  ```powershell
+  DiscordEmotify.Cli.exe reactdm --token "<TOKEN>" --emoji 🙂
+  ```
+
+## Commands
+
+- `react` — React to every message in one or more channels.
+  - Options: `--token`, `--respect-rate-limits`, `--channel`, `--emoji`, `--after`, `--before`, `--filter`, `--parallel`
+- `reactdm` — React to every message across all DM channels.
+  - Options: `--token`, `--respect-rate-limits`, `--emoji`, `--after`, `--before`, `--filter`, `--parallel`
 
 ## See also
 
-- [**Chat Analytics**](https://github.com/mlomb/chat-analytics) — solution for analyzing chat patterns of Discord users, using exports produced by **DiscordChatExporter**.
-- [**DiscordChatExporter-frontend**](https://github.com/slatinsky/DiscordChatExporter-frontend) — convenient viewer for exports produced by **DiscordChatExporter**.
+- Discord API docs for reactions: https://discord.com/developers/docs/resources/channel#create-reaction

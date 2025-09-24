@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>DiscordEmotify.Cli</AssemblyName>
+    <RootNamespace>DiscordEmotify.Cli</RootNamespace>
+    <ApplicationIcon>..\favicon.ico</ApplicationIcon>
+    <PublishTrimmed>true</PublishTrimmed>
+    <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CliFx" Version="2.3.6" />
+    <PackageReference Include="CSharpier.MsBuild" Version="1.1.2" PrivateAssets="all" />
+    <PackageReference Include="Deorcify" Version="1.1.0" PrivateAssets="all" />
+    <PackageReference Include="Gress" Version="2.1.1" />
+    <PackageReference Include="Spectre.Console" Version="0.50.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="9.0.8" />
+    <ProjectReference Include="..\DiscordEmotify.Core\DiscordChatExporter.Core.csproj" />
+  </ItemGroup>
+</Project>

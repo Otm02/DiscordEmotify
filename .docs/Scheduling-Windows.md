@@ -1,57 +1,37 @@
-# Scheduling exports on Windows
+# Scheduling reactions on Windows
 
 ## Creating the script
 
 1. Open a text editor such as Notepad and paste:
 
-```console
-# Info: https://github.com/Tyrrrz/DiscordChatExporter/blob/master/.docs
-
+```powershell
 $TOKEN = "tokenhere"
 $CHANNEL = "channelhere"
 $EXEPATH = "exefolderhere"
-$FILENAME = "filenamehere"
-$EXPORTDIRECTORY = "dirhere"
-$EXPORTFORMAT = "formathere"
-# Available export formats: PlainText, HtmlDark, HtmlLight, Json, Csv
 
 cd $EXEPATH
-
-./DiscordChatExporter.Cli export -t $TOKEN -c $CHANNEL -f $EXPORTFORMAT -o "$FILENAME.tmp"
-
-$Date = Get-Date -Format "yyyy-MM-dd-HH-mm"
-
-If($EXPORTFORMAT -match "PlainText"){mv "$FILENAME.tmp" -Destination "$EXPORTDIRECTORY\$FILENAME-$Date.txt"}
-ElseIf($EXPORTFORMAT -match "HtmlDark"){mv "$FILENAME.tmp" -Destination "$EXPORTDIRECTORY\$FILENAME-$Date.html"}
-ElseIf($EXPORTFORMAT -match "HtmlLight"){mv "$FILENAME.tmp" -Destination "$EXPORTDIRECTORY\$FILENAME-$Date.html"}
-ElseIf($EXPORTFORMAT -match "Json"){mv "$FILENAME.tmp" -Destination "$EXPORTDIRECTORY\$FILENAME-$Date.json"}
-ElseIf($EXPORTFORMAT -match "Csv"){mv "$FILENAME.tmp" -Destination "$EXPORTDIRECTORY\$FILENAME-$Date.csv"}
-exit
+./DiscordEmotify.Cli.exe react -t $TOKEN -c $CHANNEL --emoji 🙂
 ```
 
 2. Replace:
 
 - `tokenhere` with your [Token](Token-and-IDs.md)
 - `channelhere` with a [Channel ID](Token-and-IDs.md)
-- `exefolderhere` with the .exe **directory's path** (e.g. C:\Users\User\Desktop\DiscordChatExporter)
-- `filenamehere` with a filename without spaces
-- `dirhere` with the export directory (e.g. C:\Users\User\Documents\Exports)
-- `formathere` with one of the available export formats
-
-Make sure not to delete the quotes (")
+- `exefolderhere` with the .exe directory path (e.g. `C:\Users\User\Desktop\DiscordEmotify`)
+Make sure not to delete the quotes ("") around the values.
 
 3. Save the file as `filename.ps1`, not as `.txt`
 
-> **Note**: You can also modify the script to use other options, such as `include-threads` or switch to a different command, e. g. `exportguild`.
+> Note: You can also modify the script to use other options like `--after`, `--before`, `--filter`, or `--clear`.
 
-## Export at Startup
+## Run at Startup
 
 1. Press Windows + R, type `shell:startup` and press ENTER
 2. Paste `filename.ps1` or a shortcut into this folder
 
 ## Scheduling with Task Scheduler
 
-Please note that your computer must be turned on for the export to happen.
+Please note that your computer must be turned on for the task to run.
 
 1. Press Windows + R, type `taskschd.msc` and press ENTER
 2. Select `Task Scheduler Library`, create a Basic Task, and follow the instructions on-screen
